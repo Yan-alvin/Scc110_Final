@@ -6,19 +6,18 @@ int main()
 {
     FILE *file1;
     char *dx;
-    int q=0;
-    int b=0;
-    int a=0;
-    int c=0;
+    int front1=0;
+    int back1=0;
+    int front2=0;
+    int back2=0;
     int matchedWords[1000];
     int wordCount[1000];
-    int y=0;
-    int vc=0;
-    int vb=0;
-    int sameWord[1000];
+    int varback2=0;
+    int varback1=0;
+    int sameWord[1000][10];
     
 
-    file1 = fopen("own.txt", "r");
+    file1 = fopen("test1.txt", "r");
 
     if (file1 != NULL) {
         char lineOfText1[1000];
@@ -31,7 +30,7 @@ int main()
     while (fgets(lineOfText1, 1000, file1) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
-                //checks if the variable is a character and try to skip those that aren't
+                //checks if the variable is front2 character and try to skip those that aren't
                 i++;
                 x=0;
             }
@@ -45,63 +44,58 @@ int main()
         }
     }
     
-    while(q<i||dividedText1[q][b]!=0){
-        wordCount[q]++;
-        b++;
-        if(dividedText1[q][b]==0){
-           q++;
-           b=0;
+    while(front1<i||dividedText1[front1][back1]!=0){
+        wordCount[front1]++;
+        back1++;
+        if(dividedText1[front1][back1]==0){
+           front1++;
+           back1=0;
         }
     }
 
-    q=0;
-    b=0;
+    front1=0;
+    back1=0;
 
-    while(q<i||dividedText1[q][b]!=0){
-        printf("%c",dividedText1[q][b]);
-        a=0;
-        c=0;
-        while(a<i||dividedText1[a][c]!=0){
-            printf("%c",dividedText1[a][c]);
-            if(dividedText1[a][c]==dividedText1[q][b]&&wordCount[a]==wordCount[q]){
-                vc=c;
-                vb=b;
-                printf("(%d,%d)",q,matchedWords[q]);
-                while(y<wordCount[q]){
-                    if(dividedText1[a][vc]==dividedText1[q][vb]){
-                    matchedWords[q]++;
-                    vc++;
-                    vb++;
-                    y++;
-                    printf("[%d,%d]",vc,y);
-                    printf("/%d,%d/",matchedWords[q],wordCount[q]);
+    while(front1<i||dividedText1[front1][back1]!=0){
+        front2=0;
+        back2=0;
+        while(front2<i||dividedText1[front2][back2]!=0){
+            if(back1==back2&&wordCount[front1]==wordCount[front2]&&dividedText1[front1][back1]==dividedText1[front2][back2]){
+                int sameCharacter=0;
+                for(int y=0;y<wordCount[front2];y++){
+                    if(dividedText1[front1][y]==dividedText1[front2][y]){
+                        sameCharacter++;
                     }
-                }
-                if(matchedWords[q]==wordCount[q]){
-                        sameWord[q]++;
-                        printf("yay");
-                        y=0;
-                        matchedWords[q]=0;
+                    if(sameCharacter==wordCount[front2])
+                    sameWord[front1][back1]++;
                 }
             }
-            c++;
-            if(dividedText1[a][c]==0){
-            a++;
-            c=0;
+            back2++;
+            if(dividedText1[front2][back2]==0){
+            front2++;
+            back2=0;
             }
         }
-        b++;
-        if(dividedText1[q][b]==0){
-           q++;
-           b=0;
+        back1++;
+        if(dividedText1[front1][back1]==0){
+           front1++;
+           back1=0;
         }
     }
 
-    printf("%d",wordCount[0]);
-    printf("/%d/",wordCount[1]);
-    printf("%d",sameWord[0]);
-    printf("/%d/",sameWord[1]);
-    
+    front1=0;
+    back1=0;
+
+    while(front1<i||dividedText1[front1][back1]!=0){
+        printf("%c",dividedText1[front1][back1]);
+        back1++;
+        if(dividedText1[front1][back1]==0){
+            printf("=%d\n",sameWord[front1][0]);
+            front1++;
+            back1=0;
+        }
+        
+    }  
     
         fclose(file1);
     }
