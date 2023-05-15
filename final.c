@@ -4,6 +4,7 @@
 
 int main()
 {
+    //reads the first file
     FILE *file1;
     char *dx;
     int front1=0;
@@ -30,7 +31,7 @@ int main()
     while (fgets(lineOfText1, 1000, file1) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
-                //checks if the variable is front2 character and try to skip those that aren't
+                //checks if the variable is a character and try to skip those that aren't
                 i++;
                 x=0;
             }
@@ -56,6 +57,7 @@ int main()
     front1=0;
     back1=0;
 
+    //double loop to find out frequency of the words
     while(front1<i||dividedText1[front1][back1]!=0){
         front2=0;
         back2=0;
@@ -85,7 +87,7 @@ int main()
 
     front1=0;
     back1=0;
-
+    //print out the result 
     printf("Test1 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
         printf("%c",dividedText1[front1][back1]);
@@ -100,21 +102,25 @@ int main()
     
         fclose(file1);
     }
-
+    //reads the second file
     FILE *file2;
     *dx=0;
     front1=0;
     back1=0;
     front2=0;
     back2=0;
+    //reset variables
     for(int i=0;i<1000;i++){
         matchedWords[i]=0;
     }
+
     for(int i=0;i<1000;i++){
         wordCount[i]=0;
     }
+
     varback2=0;
     varback1=0;
+
     for(int i=0;i<1000;i++){
         for(int x=0;x<50;x++){
         sameWord[i][x]=0;
@@ -144,7 +150,7 @@ int main()
     while (fgets(lineOfText1, 1000, file2) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
-                //checks if the variable is front2 character and try to skip those that aren't
+                //checks if the variable is a character and try to skip those that aren't
                 i++;
                 x=0;
             }
@@ -200,6 +206,7 @@ int main()
     front1=0;
     back1=0;
 
+    //print out the results
     printf("Test2 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
         printf("%c",dividedText1[front1][back1]);
@@ -259,7 +266,7 @@ int main()
     while (fgets(lineOfText1, 1000, file2) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
-                //checks if the variable is front2 character and try to skip those that aren't
+                //checks if the variable is a character and try to skip those that aren't
                 i++;
                 x=0;
             }
@@ -315,6 +322,7 @@ int main()
     front1=0;
     back1=0;
 
+    //print out the results
     printf("Test3 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
         printf("%c",dividedText1[front1][back1]);
@@ -373,7 +381,7 @@ int main()
     while (fgets(lineOfText1, 1000, file2) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
-                //checks if the variable is front2 character and try to skip those that aren't
+                //checks if the variable is a character and try to skip those that aren't
                 i++;
                 x=0;
             }
@@ -487,7 +495,7 @@ int main()
     while (fgets(lineOfText1, 1000, file2) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
-                //checks if the variable is front2 character and try to skip those that aren't
+                //checks if the variable is a character and try to skip those that aren't
                 i++;
                 x=0;
             }
@@ -543,6 +551,7 @@ int main()
     front1=0;
     back1=0;
 
+    //print out the results
     printf("Test5 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
         printf("%c",dividedText1[front1][back1]);
