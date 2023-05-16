@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 int main()
 {
@@ -23,10 +24,19 @@ int main()
     if (file1 != NULL) {
         char lineOfText1[1000];
         char dividedText1[1000][50];
+
+        int (*identifier)[3] = malloc(3* 3 * sizeof(int));
+
+        
+
+        for(int i=0;i<1000;i++){
+            for(int x=0;x<50;x++){
+                dividedText1[i][x]=0;
+            }
+        }
         int i=0;
         int x=0;
-
-
+        long int p=0;
 
     while (fgets(lineOfText1, 1000, file1) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
@@ -68,8 +78,15 @@ int main()
                     if(dividedText1[front1][y]==dividedText1[front2][y]){
                         sameCharacter++;
                     }
-                    if(sameCharacter==wordCount[front2])
+                    if(sameCharacter==wordCount[front2]){
                     sameWord[front1][back1]++;
+                    if(front2!=identifier[front1][p]){
+                    identifier[front1][p]=0+front2;
+                    if(front1==130){
+                    }
+                    p++;
+                    }
+                    }
                 }
             }
             back2++;
@@ -82,26 +99,35 @@ int main()
         if(dividedText1[front1][back1]==0){
            front1++;
            back1=0;
+           p=0;
         }
     }
 
     front1=0;
     back1=0;
+
     //print out the result 
     printf("Test1 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
-        printf("%c",dividedText1[front1][back1]);
-        back1++;
-        if(dividedText1[front1][back1]==0){
-            printf("=%d\n",sameWord[front1][0]);
+        if(identifier[front1][0]==front1){
+            printf("%c",dividedText1[front1][back1]);
+            back1++;
+            if(dividedText1[front1][back1]==0){
+                printf("=%d/",sameWord[front1][0]);
+                front1++;
+                back1=0;
+            }
+        }
+        else{
             front1++;
             back1=0;
         }
         
     }  
     
-        fclose(file1);
+
     }
+
     //reads the second file
     FILE *file2;
     *dx=0;
@@ -136,12 +162,15 @@ int main()
         for(int i=0;i<1000;i++){
         lineOfText1[i]=0;
     }
+        int (*identifier)[3] = malloc(3* 3 * sizeof(int));
+        
+        int p=0;
         char dividedText1[1000][50];
         for(int i=0;i<1000;i++){
             for(int x=0;x<50;x++){
                 dividedText1[i][x]=0;
             }
-    }
+        }
         int i=0;
         int x=0;
 
@@ -176,6 +205,7 @@ int main()
     front1=0;
     back1=0;
 
+    //double loop to find out frequency of the words
     while(front1<i||dividedText1[front1][back1]!=0){
         front2=0;
         back2=0;
@@ -186,8 +216,14 @@ int main()
                     if(dividedText1[front1][y]==dividedText1[front2][y]){
                         sameCharacter++;
                     }
-                    if(sameCharacter==wordCount[front2])
+                    
+                    if(sameCharacter==wordCount[front2]){
                     sameWord[front1][back1]++;
+                    if(front2!=identifier[front1][p]||front1==0&&back1==0&&front2==0&&back2==0){
+                    identifier[front1][p]=front2;
+                    p++;
+                    }
+                    }
                 }
             }
             back2++;
@@ -200,43 +236,54 @@ int main()
         if(dividedText1[front1][back1]==0){
            front1++;
            back1=0;
+           p=0;
         }
     }
 
     front1=0;
     back1=0;
-
+    printf("/%d",identifier[0][0]);
     //print out the results
-    printf("Test2 Word frequency:\n");
+    printf("\nTest2 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
-        printf("%c",dividedText1[front1][back1]);
-        back1++;
-        if(dividedText1[front1][back1]==0){
-            printf("=%d\n",sameWord[front1][0]);
+        if(identifier[front1][0]==front1){
+            printf("%c",dividedText1[front1][back1]);
+            back1++;
+            if(dividedText1[front1][back1]==0){
+                printf("=%d/",sameWord[front1][0]);
+                front1++;
+                back1=0;
+            }
+        }
+        else{
             front1++;
             back1=0;
         }
         
     }  
     
-        fclose(file2);
     }
 
 
+    //reads the third file
     FILE *file3;
     *dx=0;
     front1=0;
     back1=0;
     front2=0;
     back2=0;
+    //reset variables
     for(int i=0;i<1000;i++){
         matchedWords[i]=0;
     }
+
     for(int i=0;i<1000;i++){
         wordCount[i]=0;
     }
+
     varback2=0;
     varback1=0;
+
     for(int i=0;i<1000;i++){
         for(int x=0;x<50;x++){
         sameWord[i][x]=0;
@@ -252,18 +299,21 @@ int main()
         for(int i=0;i<1000;i++){
         lineOfText1[i]=0;
     }
+        int (*identifier)[3] = malloc(3* 3 * sizeof(int));
+        
+        int p=0;
         char dividedText1[1000][50];
         for(int i=0;i<1000;i++){
             for(int x=0;x<50;x++){
                 dividedText1[i][x]=0;
             }
-    }
+        }
         int i=0;
         int x=0;
 
 
 
-    while (fgets(lineOfText1, 1000, file2) != NULL) {
+    while (fgets(lineOfText1, 1000, file3) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
                 //checks if the variable is a character and try to skip those that aren't
@@ -292,6 +342,7 @@ int main()
     front1=0;
     back1=0;
 
+    //double loop to find out frequency of the words
     while(front1<i||dividedText1[front1][back1]!=0){
         front2=0;
         back2=0;
@@ -302,8 +353,13 @@ int main()
                     if(dividedText1[front1][y]==dividedText1[front2][y]){
                         sameCharacter++;
                     }
-                    if(sameCharacter==wordCount[front2])
+                    if(sameCharacter==wordCount[front2]){
                     sameWord[front1][back1]++;
+                    if(front2!=identifier[front1][p]||front1==0&&back1==0&&front2==0&&back2==0){
+                    identifier[front1][p]=front2;
+                    p++;
+                    }
+                    }
                 }
             }
             back2++;
@@ -316,6 +372,7 @@ int main()
         if(dividedText1[front1][back1]==0){
            front1++;
            back1=0;
+           p=0;
         }
     }
 
@@ -323,35 +380,45 @@ int main()
     back1=0;
 
     //print out the results
-    printf("Test3 Word frequency:\n");
+    printf("\nTest3 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
-        printf("%c",dividedText1[front1][back1]);
-        back1++;
-        if(dividedText1[front1][back1]==0){
-            printf("=%d\n",sameWord[front1][0]);
+        if(identifier[front1][0]==front1){
+            printf("%c",dividedText1[front1][back1]);
+            back1++;
+            if(dividedText1[front1][back1]==0){
+                printf("=%d/",sameWord[front1][0]);
+                front1++;
+                back1=0;
+            }
+        }
+        else{
             front1++;
             back1=0;
         }
         
     }  
     
-        fclose(file3);
     }
 
+    //reads the fourth file
     FILE *file4;
     *dx=0;
     front1=0;
     back1=0;
     front2=0;
     back2=0;
+    //reset variables
     for(int i=0;i<1000;i++){
         matchedWords[i]=0;
     }
+
     for(int i=0;i<1000;i++){
         wordCount[i]=0;
     }
+
     varback2=0;
     varback1=0;
+
     for(int i=0;i<1000;i++){
         for(int x=0;x<50;x++){
         sameWord[i][x]=0;
@@ -367,18 +434,21 @@ int main()
         for(int i=0;i<1000;i++){
         lineOfText1[i]=0;
     }
+        int (*identifier)[3] = malloc(3* 3 * sizeof(int));
+        
+        int p=0;
         char dividedText1[1000][50];
         for(int i=0;i<1000;i++){
             for(int x=0;x<50;x++){
                 dividedText1[i][x]=0;
             }
-    }
+        }
         int i=0;
         int x=0;
 
 
 
-    while (fgets(lineOfText1, 1000, file2) != NULL) {
+    while (fgets(lineOfText1, 1000, file4) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
                 //checks if the variable is a character and try to skip those that aren't
@@ -407,6 +477,7 @@ int main()
     front1=0;
     back1=0;
 
+    //double loop to find out frequency of the words
     while(front1<i||dividedText1[front1][back1]!=0){
         front2=0;
         back2=0;
@@ -417,8 +488,13 @@ int main()
                     if(dividedText1[front1][y]==dividedText1[front2][y]){
                         sameCharacter++;
                     }
-                    if(sameCharacter==wordCount[front2])
+                    if(sameCharacter==wordCount[front2]){
                     sameWord[front1][back1]++;
+                    if(front2!=identifier[front1][p]||front1==0&&back1==0&&front2==0&&back2==0){
+                    identifier[front1][p]=front2;
+                    p++;
+                    }
+                    }
                 }
             }
             back2++;
@@ -431,41 +507,53 @@ int main()
         if(dividedText1[front1][back1]==0){
            front1++;
            back1=0;
+           p=0;
         }
     }
 
     front1=0;
     back1=0;
 
-    printf("Test4 Word frequency:\n");
+    //print out the results
+    printf("\nTest4 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
-        printf("%c",dividedText1[front1][back1]);
-        back1++;
-        if(dividedText1[front1][back1]==0){
-            printf("=%d\n",sameWord[front1][0]);
+        if(identifier[front1][0]==front1){
+            printf("%c",dividedText1[front1][back1]);
+            back1++;
+            if(dividedText1[front1][back1]==0){
+                printf("=%d/",sameWord[front1][0]);
+                front1++;
+                back1=0;
+            }
+        }
+        else{
             front1++;
             back1=0;
         }
         
     }  
     
-        fclose(file4);
     }
 
+    //reads the fifth file
     FILE *file5;
     *dx=0;
     front1=0;
     back1=0;
     front2=0;
     back2=0;
+    //reset variables
     for(int i=0;i<1000;i++){
         matchedWords[i]=0;
     }
+
     for(int i=0;i<1000;i++){
         wordCount[i]=0;
     }
+
     varback2=0;
     varback1=0;
+
     for(int i=0;i<1000;i++){
         for(int x=0;x<50;x++){
         sameWord[i][x]=0;
@@ -481,18 +569,21 @@ int main()
         for(int i=0;i<1000;i++){
         lineOfText1[i]=0;
     }
+        int (*identifier)[3] = malloc(3* 3 * sizeof(int));
+        
+        int p=0;
         char dividedText1[1000][50];
         for(int i=0;i<1000;i++){
             for(int x=0;x<50;x++){
                 dividedText1[i][x]=0;
             }
-    }
+        }
         int i=0;
         int x=0;
 
 
 
-    while (fgets(lineOfText1, 1000, file2) != NULL) {
+    while (fgets(lineOfText1, 1000, file5) != NULL) {
         for(dx=lineOfText1;*dx; dx++){
             if(isalpha(*dx)==0&&dividedText1[i][0]!=0){
                 //checks if the variable is a character and try to skip those that aren't
@@ -521,6 +612,7 @@ int main()
     front1=0;
     back1=0;
 
+    //double loop to find out frequency of the words
     while(front1<i||dividedText1[front1][back1]!=0){
         front2=0;
         back2=0;
@@ -531,8 +623,13 @@ int main()
                     if(dividedText1[front1][y]==dividedText1[front2][y]){
                         sameCharacter++;
                     }
-                    if(sameCharacter==wordCount[front2])
+                    if(sameCharacter==wordCount[front2]){
                     sameWord[front1][back1]++;
+                    if(front2!=identifier[front1][p]||front1==0&&back1==0&&front2==0&&back2==0){
+                    identifier[front1][p]=front2;
+                    p++;
+                    }
+                    }
                 }
             }
             back2++;
@@ -545,6 +642,7 @@ int main()
         if(dividedText1[front1][back1]==0){
            front1++;
            back1=0;
+           p=0;
         }
     }
 
@@ -552,18 +650,23 @@ int main()
     back1=0;
 
     //print out the results
-    printf("Test5 Word frequency:\n");
+    printf("\nTest5 Word frequency:\n");
     while(front1<i||dividedText1[front1][back1]!=0){
-        printf("%c",dividedText1[front1][back1]);
-        back1++;
-        if(dividedText1[front1][back1]==0){
-            printf("=%d\n",sameWord[front1][0]);
+        if(identifier[front1][0]==front1){
+            printf("%c",dividedText1[front1][back1]);
+            back1++;
+            if(dividedText1[front1][back1]==0){
+                printf("=%d/",sameWord[front1][0]);
+                front1++;
+                back1=0;
+            }
+        }
+        else{
             front1++;
             back1=0;
         }
         
     }  
     
-        fclose(file5);
     }
 }
